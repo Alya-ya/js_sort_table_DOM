@@ -13,16 +13,16 @@ for (const key of th) {
     const tbody = document.querySelector('tbody');
 
     masiv.sort((a, b) => {
-      if (index === 3) {
-        return (
-          Number(a.cells[index].textContent.replace(/\D/g, '')) -
-          Number(b.cells[index].textContent.replace(/\D/g, ''))
-        );
-      } else {
-        return a.cells[index].textContent.localeCompare(
-          b.cells[index].textContent,
-        );
+      const textA = a.cells[index].textContent.trim();
+      const textB = b.cells[index].textContent.trim();
+      const numA = parseFloat(textA.replace(/[^0-9.-]/g, ''));
+      const numB = parseFloat(textB.replace(/[^0-9.-]/g, ''));
+
+      if (!isNaN(numA) && !isNaN(numB)) {
+        return numA - numB;
       }
+
+      return textA.localeCompare(textB);
     });
 
     for (const row of masiv) {
